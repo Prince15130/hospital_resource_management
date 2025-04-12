@@ -27,7 +27,10 @@ export const Hero: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="4" className="health-gradient">
+              <Button
+                size="4"
+                className="flex items-center justify-center bg-primary text-black rounded-lg p-2 hover:bg-primary/80 transition-colors cursor-pointer border-black border-2"
+              >
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

@@ -2,10 +2,12 @@ import React from "react";
 import { Menu, X, LogIn } from "lucide-react";
 import { Button } from "@radix-ui/themes";
 import { useIsMobile } from "../hooks/use-mobile";
+import { useNavigate } from "react-router";
 
 export const Header: React.FC = () => {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -21,18 +23,18 @@ export const Header: React.FC = () => {
               className="mr-2"
             >
               {menuOpen ? (
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 cursor-pointer" />
               ) : (
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5 cursor-pointer" />
               )}
             </Button>
           )}
           <a href="/" className="flex items-center">
             <div className="h-8 w-8 rounded-md health-gradient flex items-center justify-center mr-2">
-              <span className="font-bold text-white">HC</span>
+              <span className="font-bold text-white">BHC</span>
             </div>
             <span className="font-bold text-xl text-primary hidden sm:inline-block">
-              HealthCare
+              Bayer HealthCare
             </span>
           </a>
         </div>
@@ -48,31 +50,31 @@ export const Header: React.FC = () => {
             href="/dashboard"
             className="text-foreground hover:text-primary transition-colors"
           >
-            Dashboard
+            Health
           </a>
           <a
             href="/appointments"
             className="text-foreground hover:text-primary transition-colors"
           >
-            Appointments
+            Resources
           </a>
           <a
             href="/medications"
             className="text-foreground hover:text-primary transition-colors"
           >
-            Medications
+            About us
           </a>
           <a
             href="/doctors"
             className="text-foreground hover:text-primary transition-colors"
           >
-            Doctors
+            Contact
           </a>
         </nav>
 
         <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="1" className="relative">
-            <LogIn className="h-5 w-5" />
+          <Button variant="ghost" size="1" className="relative cursor-pointer">
+            <LogIn className="h-5 w-5" onClick={() => navigate("/login")} />
             <span className="absolute top-1 right-1 h-2 w-2 bg-destructive rounded-full"></span>
           </Button>
         </div>
@@ -81,7 +83,7 @@ export const Header: React.FC = () => {
       {/* Mobile menu */}
       {isMobile && menuOpen && (
         <div className="fixed inset-0 bg-background z-20 pt-16">
-          <nav className="container flex flex-col space-y-4 p-4">
+          <nav className="container flex flex-col space-y-4 p-4 bg-blue-200 z-30">
             <a
               href="/"
               className="text-foreground hover:text-primary transition-colors p-2 border-b"
