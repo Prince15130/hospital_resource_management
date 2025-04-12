@@ -1,10 +1,25 @@
 import "./App.css";
+/* import {
+  Activity,
+  Calendar,
+  HeartPulse,
+  Stethoscope,
+  Pill,
+  Video,
+  Users,
+  CreditCard,
+} from "lucide-react"; */
+import { Header } from "./components/Header";
+import { Hero } from "./components/Hero";
 
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%">
+      <Header />
+      <main className="flex-1">
+        <Hero />
+      </main>
+    </div>
   );
 }
 
