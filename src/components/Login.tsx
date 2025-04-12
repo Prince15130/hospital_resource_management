@@ -39,7 +39,7 @@ export const Login = () => {
 
     // Simulate API call
     setTimeout(() => {
-      if (data.email === "admin@bayer.com" && data.password === "password123") {
+      if (data.email === "admin@bayer.com" && data.password === "Welcome@123") {
         //  success
         navigate("/dashboard");
       } else {
