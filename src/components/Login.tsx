@@ -1,41 +1,57 @@
 import { useState } from "react";
 import { EyeOff, Eye, AlertCircle, Hospital } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useNavigate } from "react-router";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email format" }),
+  password: z.string().min(1, { message: "Password is required" }),
+  rememberMe: z.boolean().optional(),
+});
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState("");
+  const [serverError, setServerError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
 
-    // Form validation
-    if (!email || !password) {
-      setError("Please enter both email and password");
-      return;
-    }
-
-    // Simulate login API call
+  const onSubmit = (data: z.infer<typeof loginSchema>) => {
+    setServerError("");
     setIsLoading(true);
+
+    // Simulate API call
     setTimeout(() => {
-      // For demo purposes - in real app, this would be your API call
-      if (email === "admin@hospital.com" && password === "password") {
-        // Login success
-        window.location.href = "/dashboard";
+      if (data.email === "admin@bayer.com" && data.password === "password123") {
+        //  success
+        navigate("/dashboard");
       } else {
         // Login failed
-        setError("Invalid email or password");
+        setServerError("Invalid email or password");
         setIsLoading(false);
       }
     }, 1500);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 to-emerald-500 ">
       {/* Login Card */}
       <div className="max-w-md w-full mx-4 z-10">
         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
@@ -53,14 +69,14 @@ export const Login = () => {
               Sign in to your account
             </h2>
 
-            {error && (
-              <div className="flex items-center bg-red-50 text-red-700 p-3 rounded-lg mb-6">
+            {serverError && (
+              <div className="flex items-center bg-red-50 text-red-700 p-2 rounded-lg mb-3">
                 <AlertCircle size={18} className="mr-2 flex-shrink-0" />
-                <span className="text-sm">{error}</span>
+                <span className="text-sm">{serverError}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
                 <label
                   className="block text-sm font-medium text-gray-700 mb-1"
@@ -71,11 +87,21 @@ export const Login = () => {
                 <input
                   id="email"
                   type="email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className={`w-full px-4 py-2 border rounded-lg transition-all
+                    ${
+                      errors.email
+                        ? "border-red-500 focus:ring-red-500"
+                        : "border-gray-300 focus:ring-blue-500"
+                    } 
+                    focus:ring-2 focus:border-transparent`}
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div className="mb-6">
@@ -91,8 +117,7 @@ export const Login = () => {
                     type={showPassword ? "text" : "password"}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password")}
                   />
                   <button
                     type="button"
@@ -110,8 +135,7 @@ export const Login = () => {
                     id="remember-me"
                     type="checkbox"
                     className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    checked={rememberMe}
-                    onChange={() => setRememberMe(!rememberMe)}
+                    {...register("rememberMe")}
                   />
                   <label
                     htmlFor="remember-me"
@@ -133,7 +157,7 @@ export const Login = () => {
 
               <button
                 type="submit"
-                className={`w-full py-2.5 px-4 rounded-lg text-white font-medium ${
+                className={`cursor-pointer w-full py-2.5 px-4 rounded-lg text-white font-medium ${
                   isLoading
                     ? "bg-blue-400 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
@@ -184,7 +208,7 @@ export const Login = () => {
           </div>
         </div>
 
-        <div className="text-center mt-6 text-gray-500 text-sm">
+        <div className="text-center mt-6 text-black-500 text-sm">
           &copy; 2025 Bayer HealthCare. All rights reserved.
         </div>
       </div>
