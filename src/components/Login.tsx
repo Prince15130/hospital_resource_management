@@ -40,8 +40,12 @@ export const Login = () => {
     // Simulate API call
     setTimeout(() => {
       if (data.email === "admin@bayer.com" && data.password === "Welcome@123") {
-        //  success
         navigate("/dashboard");
+      } else if (
+        data.email === "staff@bayer.com" &&
+        data.password === "Welcome@123"
+      ) {
+        navigate("/staff-dashboard");
       } else {
         // Login failed
         setServerError("Invalid email or password");

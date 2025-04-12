@@ -11,7 +11,10 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="login" element={<Login />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />}>
+          <Route index element={<Dashboard />} />
+          <Route path="beds" element={<Dashboard />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>

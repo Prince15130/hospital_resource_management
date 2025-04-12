@@ -9,6 +9,7 @@ import {
   Clipboard,
 } from "lucide-react";
 import { useState } from "react";
+import { NavLink } from "react-router";
 
 export const Sidebar = ({
   isSidebarOpen,
@@ -38,7 +39,8 @@ export const Sidebar = ({
       </div>
 
       <nav className="mt-6">
-        <div
+        <NavLink
+          to="/dashboard"
           className={`menu-item ${
             activeTab === "dashboard" ? "bg-blue-50 text-blue-600" : ""
           }`}
@@ -46,8 +48,9 @@ export const Sidebar = ({
         >
           <Home size={20} />
           {isSidebarOpen && <span className="ml-4">Dashboard</span>}
-        </div>
-        <div
+        </NavLink>
+        <NavLink
+          to="/dashboard/beds"
           className={`menu-item ${
             activeTab === "beds" ? "bg-blue-50 text-blue-600" : ""
           }`}
@@ -55,8 +58,8 @@ export const Sidebar = ({
         >
           <Bed size={20} />
           {isSidebarOpen && <span className="ml-4">Bed Management</span>}
-        </div>
-        <div
+        </NavLink>
+        <NavLink
           className={`menu-item ${
             activeTab === "patients" ? "bg-blue-50 text-blue-600" : ""
           }`}
@@ -64,8 +67,8 @@ export const Sidebar = ({
         >
           <Users size={20} />
           {isSidebarOpen && <span className="ml-4">Patients</span>}
-        </div>
-        <div
+        </NavLink>
+        <NavLink
           className={`menu-item ${
             activeTab === "resources" ? "bg-blue-50 text-blue-600" : ""
           }`}
@@ -73,8 +76,8 @@ export const Sidebar = ({
         >
           <Clipboard size={20} />
           {isSidebarOpen && <span className="ml-4">Resources</span>}
-        </div>
-        <div
+        </NavLink>
+        <NavLink
           className={`menu-item ${
             activeTab === "reports" ? "bg-blue-50 text-blue-600" : ""
           }`}
@@ -82,8 +85,8 @@ export const Sidebar = ({
         >
           <BarChart2 size={20} />
           {isSidebarOpen && <span className="ml-4">Reports</span>}
-        </div>
-        <div
+        </NavLink>
+        <NavLink
           className={`menu-item ${
             activeTab === "settings" ? "bg-blue-50 text-blue-600" : ""
           }`}
@@ -91,7 +94,7 @@ export const Sidebar = ({
         >
           <Settings size={20} />
           {isSidebarOpen && <span className="ml-4">Settings</span>}
-        </div>
+        </NavLink>
       </nav>
     </div>
   );

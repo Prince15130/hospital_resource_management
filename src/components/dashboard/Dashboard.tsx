@@ -3,12 +3,16 @@ import "./dashboard.css";
 
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
-import { Status } from "./Status";
-import { DepartmentStatus } from "./DepartmentStatus";
-import { Alerts } from "./Alerts";
+import { Home } from "./Home";
+import { useLocation } from "react-router";
+import { BedManagement } from "../bed-management/BedManagement";
 
 export const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const isDashboardPage = path === "dashboard" || path === undefined;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -27,18 +31,8 @@ export const Dashboard = () => {
       >
         {/* Header */}
         <Header />
-
         <main className="p-6">
-          {/* Stats Row */}
-          <Status />
-          {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Department Status */}
-            <DepartmentStatus />
-
-            {/* Recent Alerts */}
-            <Alerts />
-          </div>
+          {isDashboardPage === true ? <Home /> : <BedManagement />}
         </main>
       </div>
     </div>

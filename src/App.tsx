@@ -1,14 +1,4 @@
 import "./App.css";
-/* import {
-  Activity,
-  Calendar,
-  HeartPulse,
-  Stethoscope,
-  Pill,
-  Video,
-  Users,
-  CreditCard,
-} from "lucide-react"; */
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 
